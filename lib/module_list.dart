@@ -1,16 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ModuleList extends StatefulWidget {
-  final List<String> doneModuleList;
+import 'provider/DoneModuleProvider.dart';
 
-  ModuleList({@required this.doneModuleList});
-
-  @override
-  _ModuleListState createState() => _ModuleListState();
-}
-
-class _ModuleListState extends State<ModuleList> {
+class ModuleList extends StatelessWidget {
   final List<String> _moduleList = [
     'Modul 1 - Pengenalan Dart',
     'Modul 2 - Memulai Pemrograman dengan Dart',
@@ -31,15 +25,15 @@ class _ModuleListState extends State<ModuleList> {
     return ListView.builder(
         itemCount: _moduleList.length,
         itemBuilder: (context, index) {
-          return ModuleTile(
-            moduleName: _moduleList[index],
-            isDone: widget.doneModuleList.contains(_moduleList[index]),
-            onCLick: () {
-              setState(() {
-                widget.doneModuleList.add(_moduleList[index]);
-              });
-            },
-          );
+          return Consumer(builder: (context, DoneModuleProvider data, widget) {
+            return ModuleTile(
+              moduleName: _moduleList[index],
+              isDone: data.doneModuleList.contains(_moduleList[index]),
+              onClick: () {
+                data.complete(_moduleList[index]);
+              },
+            );
+          });
         });
   }
 }
@@ -47,9 +41,9 @@ class _ModuleListState extends State<ModuleList> {
 class ModuleTile extends StatelessWidget {
   final String moduleName;
   final bool isDone;
-  final Function onCLick;
+  final Function onClick;
 
-  ModuleTile({@required this.moduleName, @required this.isDone, @required this.onCLick});
+  ModuleTile({@required this.moduleName, @required this.isDone, @required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +53,7 @@ class ModuleTile extends StatelessWidget {
           ? Icon(Icons.done)
           : ElevatedButton(
               child: Text('Done'),
-              onPressed: onCLick,
+              onPressed: onClick,
             ),
     );
   }
