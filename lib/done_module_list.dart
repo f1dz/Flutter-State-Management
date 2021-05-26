@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:state_management/provider/DoneModuleProvider.dart';
 
 class DoneModuleList extends StatelessWidget {
-  final List<String> doneModuleList;
-
-  const DoneModuleList({@required this.doneModuleList});
-
   @override
   Widget build(BuildContext context) {
+    final doneModuleList = Provider.of<DoneModuleProvider>(context, listen: false).doneModuleList;
     return Scaffold(
       appBar: AppBar(
         title: Text('Done Module List'),

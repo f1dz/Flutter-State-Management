@@ -3,14 +3,7 @@ import 'package:flutter/material.dart';
 import 'done_module_list.dart';
 import 'module_list.dart';
 
-class ModulePage extends StatefulWidget {
-  @override
-  _ModulePageState createState() => _ModulePageState();
-}
-
-class _ModulePageState extends State<ModulePage> {
-  final List<String> doneModuleList = [];
-
+class ModulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,18 +13,11 @@ class _ModulePageState extends State<ModulePage> {
           IconButton(
               icon: Icon(Icons.done),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DoneModuleList(
-                              doneModuleList: doneModuleList,
-                            )));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DoneModuleList()));
               }),
         ],
       ),
-      body: ModuleList(
-        doneModuleList: doneModuleList,
-      ),
+      body: ModuleList(),
     );
   }
 }
